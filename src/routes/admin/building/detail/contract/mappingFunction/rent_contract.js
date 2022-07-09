@@ -1,0 +1,43 @@
+export default function mappingRentContract(params) {
+  return {
+    buildingId: params?.buildingId,
+    createdDate: params?.createdDate,
+    address: params?.address,
+    effectiveDate: params?.effectiveDate,
+    // effectiveDate:'2022-05-12T08:27:23.200Z',
+
+    depositContractId: params?.depositContractId,
+    lessor: {
+      name: params?.aLessorName,
+      phoneNumber: params?.aLessorPhoneNumber,
+      indentityCard: params?.aLessorIdentityCard,
+      icDate: params?.aLessorIcDate,
+      icPlace: params?.aLessorIcPlace,
+      email: params?.aLessorMail,
+      appUserId: params?.lessorAppUserId ? params?.lessorAppUserId : null,
+    },
+    tenant: {
+      name: params?.bTenantName,
+      phoneNumber: params?.bTenantPhoneNumber,
+      indentityCard: params?.bTenantIdentityCardNumber,
+      icDate: params?.bTenantIcDate,
+      icPlace: params?.bTenantIcplace,
+      email: params?.bTenantMail,
+      appUserId: params?.tenantAppUserId ? params?.tenantAppUserId : null,
+    },
+    cost: params.costList === '' ? [] : params.costList,
+    roomId: params?.roomId,
+    acreage: params?.acreage,
+    price: params?.price,
+    rentalTerm: params?.rentalTerm,
+    fromDate: params?.rentTermEffectTime[0],
+    toDate: params?.rentTermEffectTime[1],
+    electricityIndicator: params?.electricityIndicator,
+    waterIndicator: params?.waterIndicator,
+    numberOfTenants: params?.numberOfTenants,
+    deposit: Math.floor(params?.deposit).toString(),
+    code: params?.code,
+    depositNumber: Math.floor(params?.deposit).toString(),
+    saveWithSignature: !!params?.saveWithSignature,
+  };
+}

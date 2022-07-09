@@ -1,0 +1,47 @@
+.pay-rent {
+  margin-bottom: 10px;
+  > div {
+    @apply mb-0;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+}
+
+.contract-rent {
+  .ant-form .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+    right: 0;
+    top: 2px;
+  }
+
+  .ant-modal-header {
+    border-bottom: 1px solid #9e9e9e;
+  }
+  .ant-form-item-label > label {
+    @apply font-normal text-black;
+  }
+
+  .ant-modal-body {
+    > div div {
+      .grow .grid {
+        @apply mx-2;
+        .col-span-12 {
+          .ant-form-item {
+            @apply mb-4;
+          }
+        }
+        .col-span-12:nth-child(4),
+        .col-span-12:nth-child(5) {
+          .ant-form-item {
+            @apply flex-row flex items-center;
+            .ant-form-item-label {
+              @apply p-0 mr-3;
+            }
+          }
+        }
+        .ant-picker.ant-picker-disabled {
+        border-color: #a5a5a5;
+      }
+      }
+    }
+  }
+}

@@ -1,0 +1,151 @@
+import { formatCurrency } from 'utils';
+const mappingDeposit = {
+  webToServer: (value, roomId) => {
+    console.log(value);
+    const showC = {
+      depositContractCode: value?.depositContractCode,
+      address: value?.address,
+      lessor: {
+        // "id": null,
+        name: value?.aLessorName,
+        dateOfBirthday: value?.aLessorDateOfBirthday,
+        passport: value?.passport,
+        identityCard: value?.aLessorIdentityCardNumber,
+        icPlace: value?.aLessorIcPlace,
+        icDate: value?.aLessorIcDate,
+        phoneNumber: value?.aLessorPhoneNumber,
+        accountBank: value?.aLessorAccountBank,
+        bank: value?.nameBanking,
+        type: 'OWNER',
+        // "appUserId": 0,
+        email: value?.aLessorEmail,
+        address: 'value',
+      },
+      depositor: {
+        // "id": null,
+        name: value?.depositContractPeople,
+        dateOfBirthday: value?.depositorDateOfBirthday,
+        passport: 'value',
+        identityCard: value?.depositorIdentityCard,
+        icPlace: value?.depositorIcPlace,
+        icDate: value?.depositorIcDate,
+        phoneNumber: value?.depositorPhoneNumber,
+        accountBank: 'value?',
+        bank: 'value?',
+        type: 'value?',
+        // "appUserId": 0,
+        email: value?.depositorEmail,
+        address: 'value',
+      },
+      roomDto: {
+        id: roomId,
+        roomNumber: value?.roomDtoId,
+        acreage: value?.acreage,
+        price: value?.price,
+        rentalTerm: value?.rentalTerm,
+        tenant: value?.tenant,
+      },
+      costList: value?.costList.map((ele) => {
+        console.log(ele);
+        return { ...ele, unitPrice: ele.unitPrice?.replaceAll('.', '') };
+      }),
+      depositNumber: value?.depositNumber,
+      depositNumberString: value?.depositNumberString,
+      effectiveDate: value?.effectiveDate,
+      note: value?.note,
+      // "status": "CREATE_NEW",
+      statusPayment: value?.statusPayment === 'Đã thanh toán' ? 'PAYMENT' : 'NO_PAYMENT',
+      // "datePayment": value?.statusPayment?"":value?.createdAt,
+      createdAt: value?.createdAt,
+      depositDay: value?.depositDay,
+      pdfTemplate: 0,
+      price: value?.price,
+      // fromDate: value?.depositTermEffectTime && value?.depositTermEffectTime[0],
+      // endDate: value?.depositTermEffectTime && value?.depositTermEffectTime[1],
+      fromDate: value?.fromDate,
+      endDate: value?.endDate,
+      saveWithSignature: !!value?.saveWithSignature,
+    };
+
+    if (value?.checkBoxShowC) {
+      showC.housingBroker = {
+        // "id":null,
+        name: value?.housingBrokerName,
+        dateOfBirthday: value?.housingBrokerDateOfBirthday,
+        passport: 'null',
+        identityCard: value?.housingBrokerIdentityCard,
+        icPlace: value?.housingBrokerIcPlace,
+        icDate: value?.housingBrokerIcDate,
+        phoneNumber: value?.housingBrokerPhoneNumber,
+        accountBank: 'null',
+        bank: 'null',
+        type: 'OWNER',
+        // "appUserId": 0,
+        email: value?.housingBrokerEmail,
+        address: 'null',
+      };
+    }
+
+    return showC;
+  },
+  serverToWeb: (data) => {
+    data?.costs.forEach((ele) => {
+      ele.unitPrice = formatCurrency(Math.floor(ele.unitPrice).toString(), '');
+    });
+    return {
+      ...data,
+      createdAt: data?.createdAt,
+      depositContractCode: data?.depositContractCode,
+      address: data?.address,
+      aLessorName: data?.lessor?.name,
+      aLessorDateOfBirthday: data?.lessor?.dateOfBirthday,
+      aLessorIdentityCardNumber: data?.lessor?.identityCard,
+      aLessorIcPlace: data?.lessor?.icPlace,
+      aLessorIcDate: data?.lessor?.icDate,
+      aLessorPhoneNumber: data?.lessor?.phoneNumber,
+      aLessorAccountBank: data?.lessor?.accountBank,
+      nameBanking: data?.lessor?.bank,
+      type: data?.lessor?.type,
+      aLessorEmail: data?.lessor?.email,
+
+      depositContractPeople: data?.depositor?.name,
+      depositorDateOfBirthday: data?.depositor?.dateOfBirthday,
+      depositorIdentityCard: data?.depositor?.identityCard,
+      depositorIcPlace: data?.depositor?.icPlace,
+      depositorIcDate: data?.depositor?.icDate,
+      depositorPhoneNumber: data?.depositor?.phoneNumber,
+      accountBank: data?.depositor?.accountBank,
+      bank: data?.depositor?.bank,
+      depositorEmail: data?.depositor?.email,
+      housingBrokerName: data?.housingBroker?.name,
+      housingBrokerDateOfBirthday: data?.housingBroker?.dateOfBirthday,
+      housingBrokerIdentityCard: data?.housingBroker?.identityCard,
+      housingBrokerIcPlace: data?.housingBroker?.icPlace,
+      housingBrokerIcDate: data?.housingBroker?.icDate,
+      housingBrokerPhoneNumber: data?.housingBroker?.phoneNumber,
+      housingBrokerEmail: data?.housingBroker?.email,
+      roomDto_Id: data?.roomDto?.id,
+      roomDtoId: data?.roomDto?.roomNumber,
+      acreage: Math.floor(data?.roomDto?.acreage).toString(),
+      price: Math.floor(data?.price).toString(),
+      tenant: data?.roomDto?.tenant,
+      costList: data?.costs,
+      rentalTerm: data?.roomDto.rentalTerm,
+      depositDay: data?.depositDay,
+      depositNumber: Math.floor(data?.depositNumber).toString(),
+      depositNumberString: data?.depositNumberString,
+      effectiveDate: data?.effectiveDate,
+      note: data?.note,
+      status: data?.status,
+      statusPayment: data?.statusPayment === 'PAYMENT' ? 'Đã thanh toán' : 'Chờ thanh toán',
+      datePayment: data?.datePayment,
+      pdfTemplate: 0,
+      // depositTermEffectTime: [data?.fromDate, data?.endDate],
+      fromDate: data?.fromDate,
+      endDate: data?.endDate,
+      saveWithSignature: data?.saveWithSignature,
+    };
+  },
+};
+
+export default mappingDeposit;
